@@ -1,0 +1,8 @@
+*.pdf
+*.csv
+*.user
+*.xlsx
+*.xlsm
+.vs/**
+bin/**
+obj/**
