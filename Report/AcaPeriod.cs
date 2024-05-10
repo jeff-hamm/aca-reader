@@ -3,7 +3,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AcaReader.Coverage;
 
-public class AcaPeriod : TimePeriodChain, IAcaPeriod
+public class AcaPeriod : TimePeriodCollection, IAcaPeriod
 {
     public AcaPeriod(DateTime startTime, int months)
     {
@@ -11,8 +11,8 @@ public class AcaPeriod : TimePeriodChain, IAcaPeriod
         MeasurementPeriod = new TimeInterval(startTime, 
             startTime.AddMonths(months-AcaConfig.AdministrativePeriod), endEdge: IntervalEdge.Open);
         AdministrativePeriod = 
-            new TimeInterval(MeasurementPeriod.EndInterval, MeasurementPeriod.EndInterval.AddMonths(AcaConfig.AdministrativePeriod), IntervalEdge.Open);
-        StabilityPeriod = new TimeInterval(AdministrativePeriod.EndInterval, AdministrativePeriod.EndInterval.AddMonths(months), IntervalEdge.Open);
+            new TimeInterval(MeasurementPeriod.EndInterval, MeasurementPeriod.EndInterval.AddMonths(AcaConfig.AdministrativePeriod), endEdge: IntervalEdge.Open);
+        StabilityPeriod = new TimeInterval(AdministrativePeriod.EndInterval, AdministrativePeriod.EndInterval.AddMonths(months), endEdge: IntervalEdge.Open);
         base.Add(MeasurementPeriod);
         base.Add(AdministrativePeriod);
         base.Add(StabilityPeriod);
@@ -45,7 +45,7 @@ public class AcaPeriod : TimePeriodChain, IAcaPeriod
         if (StabilityPeriod.HasInside(date))
             return MeasurementPeriodType.Stable;
         if (AdministrativePeriod.HasInside(date))
-            return MeasurementPeriodType.Stable;
+            return MeasurementPeriodType.Administrative;
         if (MeasurementPeriod.HasInside(date))
             return MeasurementPeriodType.Measurement;
         return null;

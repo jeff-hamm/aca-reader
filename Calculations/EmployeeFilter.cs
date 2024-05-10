@@ -93,9 +93,13 @@ public class ReportGenerator(ReportYear reportYear)
 
             return EmployeeType.PartTime;
         }
-
+        if (month.YearMonth == YearMonth.July)
+        {
+            int i = 0;
+        }
         if (details.CurrentPeriod.Period.GetPeriodType(month) is not { } type)
             throw new InvalidOperationException($"No period type for {month}");
+
         if (type is MeasurementPeriodType.Measurement or MeasurementPeriodType.Administrative)
         {
             if (details.PreviousPeriod.Period.GetPeriodType(month) != MeasurementPeriodType.Stable)

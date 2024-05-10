@@ -34,7 +34,7 @@ public class MeasuredPeriod(AcaPeriod period)
                 measuring = true;
                 continue;
             }
-            if (type is not MeasurementPeriodType.Stable or MeasurementPeriodType.Administrative)
+            if (type is not MeasurementPeriodType.Stable and not MeasurementPeriodType.Administrative)
                 throw new NotImplementedException();
             break;
         }
